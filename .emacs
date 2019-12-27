@@ -5,6 +5,8 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Most of the following code has to do with/were added by the package manager
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;https://emacs.stackexchange.com/questions/51721/failed-to-download-gnu-archive
+(setq package-check-signature nil)
 (package-initialize)
 
 (require 'package)
@@ -35,7 +37,7 @@
  '(jdee-db-spec-breakpoint-face-colors (cons "#10151C" "#384551"))
  '(package-selected-packages
    (quote
-    (flymd npm-mode ac-emacs-eclim irony no-littering markdown-mode web-mode rainbow-mode eclim company company-emacs-eclim flycheck-popup-tip magit borland-blue-theme color-theme-sanityinc-tomorrow xresources-theme test-c chess purp-theme jazz-theme seethru neotree tide tss dotnet spacemacs-theme doom-themes dumb-jump omnisharp flycheck color-theme-modern)))
+    (free-keys powershell flymd npm-mode ac-emacs-eclim irony no-littering markdown-mode web-mode rainbow-mode eclim company company-emacs-eclim flycheck-popup-tip magit borland-blue-theme color-theme-sanityinc-tomorrow xresources-theme test-c chess purp-theme jazz-theme seethru neotree tide tss dotnet spacemacs-theme doom-themes dumb-jump omnisharp flycheck color-theme-modern)))
  '(pdf-view-midnight-colors (quote ("#655370" . "#fbf8ef")))
  '(vc-annotate-background "#1D252C")
  '(vc-annotate-color-map
@@ -90,6 +92,10 @@
 ;; disable tab indent globally
 
 (setq-default indent-tabs-mode nil)
+
+;; bind compile
+
+(global-set-key (kbd "C-x g") 'compile)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Aesthetic settings
@@ -151,4 +157,37 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Setup initial term page
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-(neotree-show)
+(add-to-list 'load-path "~/")
+(neotree-dir "~/")
+(global-set-key [f8] 'neotree-toggle)
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Git setup
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(require 'git)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; C/C++ setup
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;Running Make with the closest Makefile
+;(from https://www.emacswiki.org/emacs/CompileCommand)
+(require 'cl) ; If you don't have it already
+
+(defun* get-closest-pathname (&optional (file "Makefile"))
+  "Determine the pathname of the first instance of FILE starting from the current directory towards root.
+This may not do the correct thing in presence of links. If it does not find FILE, then it shall return the name
+of FILE in the current directory, suitable for creation"
+  (let ((root (expand-file-name "/"))) ; the win32 builds should translate this correctly
+    (expand-file-name file
+		      (loop 
+			for d = default-directory then (expand-file-name ".." d)
+			if (file-exists-p (expand-file-name file d))
+			return d
+			if (equal d root)
+			return nil))))
+(require 'compile)
+(add-hook 'c-mode-hook (lambda () (set (make-local-variable 'compile-command) (format "make -f %s" (get-closest-pathname)))))
+;4 tabs, linux style (from GNU style)
+(setq c-default-style "linux"
+      c-basic-offset 4)

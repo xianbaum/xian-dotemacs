@@ -37,7 +37,7 @@
  '(jdee-db-spec-breakpoint-face-colors (cons "#10151C" "#384551"))
  '(package-selected-packages
    (quote
-    (free-keys powershell flymd npm-mode ac-emacs-eclim irony no-littering markdown-mode web-mode rainbow-mode eclim company company-emacs-eclim flycheck-popup-tip magit borland-blue-theme color-theme-sanityinc-tomorrow xresources-theme test-c chess purp-theme jazz-theme seethru neotree tide tss dotnet spacemacs-theme doom-themes dumb-jump omnisharp flycheck color-theme-modern)))
+    (flycheck-clang-analyzer flycheck-irony company-irony company-irony-c-headers free-keys powershell flymd npm-mode ac-emacs-eclim irony no-littering markdown-mode web-mode rainbow-mode eclim company company-emacs-eclim flycheck-popup-tip magit borland-blue-theme color-theme-sanityinc-tomorrow xresources-theme test-c chess purp-theme jazz-theme seethru neotree tide tss dotnet spacemacs-theme doom-themes dumb-jump omnisharp flycheck color-theme-modern)))
  '(pdf-view-midnight-colors (quote ("#655370" . "#fbf8ef")))
  '(vc-annotate-background "#1D252C")
  '(vc-annotate-color-map
@@ -60,7 +60,8 @@
     (cons 320 "#604856")
     (cons 340 "#56697A")
     (cons 360 "#56697A")))
- '(vc-annotate-very-old-color nil))
+ '(vc-annotate-very-old-color nil)
+ '(window-divider-mode nil))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -158,7 +159,7 @@
 ;; Setup initial term page
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (add-to-list 'load-path "~/")
-(neotree-dir "~/")
+
 (global-set-key [f8] 'neotree-toggle)
 
 
@@ -170,8 +171,9 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; C/C++ setup
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;Running Make with the closest Makefile
-;(from https://www.emacswiki.org/emacs/CompileCommand)
+
+;; Running Make with the closest Makefile
+;; (from https://www.emacswiki.org/emacs/CompileCommand)
 (require 'cl) ; If you don't have it already
 
 (defun* get-closest-pathname (&optional (file "Makefile"))
@@ -188,6 +190,73 @@ of FILE in the current directory, suitable for creation"
 			return nil))))
 (require 'compile)
 (add-hook 'c-mode-hook (lambda () (set (make-local-variable 'compile-command) (format "make -f %s" (get-closest-pathname)))))
-;4 tabs, linux style (from GNU style)
+
+;;4 tabs, linux style (from GNU style)
+
 (setq c-default-style "linux"
       c-basic-offset 4)
+
+;; Emacs as C++ IDE
+;; https://syamajala.github.io/c-ide.html
+
+;; Source code completion using Irony (from Emacs as C++ IDE)
+
+(add-hook 'c++-mode-hook 'irony-mode)
+(add-hook 'c-mode-hook 'irony-mode)
+(add-hook 'objc-mode-hook 'irony-mode)
+
+(defun my-irony-mode-hook ()
+  (define-key irony-mode-map [remap completion-at-point]
+    'irony-completion-at-point-async)
+  (define-key irony-mode-map [remap complete-symbol]
+    'irony-completion-at-point-async))
+
+(add-hook 'irony-mode-hook 'my-irony-mode-hook)
+(add-hook 'irony-mode-hook 'irony-cdb-autosetup-compile-options)
+
+;; Using Company mode
+
+(add-hook 'c-mode-hook 'company-mode)
+(add-hook 'c++-mode-hook 'company-mode)
+(add-hook 'objc-mode-hook 'company-mode)
+
+;; Using flychek mode
+
+(add-hook 'c-mode-hook 'flycheck-mode)
+(add-hook 'c++-mode-hook 'flycheck-mode)
+(add-hook 'objc-mode-hook 'flycheck-mode)
+
+;; Using Company with Irony (from Emacs as a C++ IDE)
+
+(add-hook 'irony-mode-hook 'company-irony-setup-begin-commands)
+(eval-after-load 'company
+  '(add-to-list
+    'company-backends 'company-irony))
+
+;; Header file completion with company-irony-c-headers
+
+(require 'company-irony-c-headers)
+(eval-after-load 'company
+  '(add-to-list
+    'company-backends '(company-irony-c-headers company-irony)))
+
+;; Syntax checking with Flycheck
+
+(add-hook 'c++-mode-hook 'flycheck-mode)
+(add-hook 'c-mode-hook 'flycheck-mode)
+
+;; Integrating Irony with Flycheck
+
+(eval-after-load 'flycheck
+  '(add-hook 'flycheck-mode-hook #'flycheck-irony-setup))
+
+;; From Irony's README:
+;; Windows performance tweaks
+
+(when (boundp 'w32-pipe-read-delay)
+  (setq w32-pipe-read-delay 0))
+;; Set the buffer size to 64K on Windows (from the original 4K)
+(when (boundp 'w32-pipe-buffer-size)
+  (setq irony-server-w32-pipe-buffer-size (* 64 1024)))
+
+;; Remember to run irony-install-server

@@ -73,7 +73,23 @@
 ;; Install selected packages
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(package-install-selected-packages)
+;; setup package and use-package
+(package-initialize)
+
+;; override the default http with https
+(setq package-archives '(("gnu" . "https://elpa.gnu.org/packages/")))
+
+;; add melpa to the front
+(add-to-list 'package-archives
+            '("melpa" . "https://melpa.org/packages/") t)
+
+;; Bootstrap `use-package'
+;; http://www.lunaryorn.com/2015/01/06/my-emacs-configuration-with-use-package.html
+;; use-package autoloads will make sure it get pulled in at the right time
+;; read "package autoloads":  http://www.lunaryorn.com/2014/07/02/autoloads-in-emacs-lisp.html
+(unless (package-installed-p 'use-package)
+  (package-refresh-contents)
+  (package-install 'use-package))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Emacs base config
@@ -164,11 +180,6 @@
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Git setup
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-(require 'git)
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; C/C++ setup
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
@@ -220,7 +231,7 @@ of FILE in the current directory, suitable for creation"
 (add-hook 'c++-mode-hook 'company-mode)
 (add-hook 'objc-mode-hook 'company-mode)
 
-;; Using flychek mode
+;; Using flycheck mode
 
 (add-hook 'c-mode-hook 'flycheck-mode)
 (add-hook 'c++-mode-hook 'flycheck-mode)

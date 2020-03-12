@@ -23,8 +23,10 @@
  ;; If there is more than one, they won't work right.
  '(ansi-color-faces-vector
    [default bold shadow italic underline bold bold-italic bold])
+ '(ansi-color-names-vector
+   ["#2b2a27" "#ff5d38" "#98be65" "#bcd42a" "#51afef" "#c678dd" "#46D9FF" "#ede0ce"])
  '(beacon-color "#f2777a")
- '(custom-enabled-themes (quote (doom-laserwave)))
+ '(custom-enabled-themes (quote (doom-tomorrow-day)))
  '(custom-safe-themes t)
  '(eclim-eclipse-dirs (quote ("/usr/lib/eclipse")))
  '(eclim-executable
@@ -32,12 +34,41 @@
  '(eclimd-default-workspace "~/prog/eclipse")
  '(eclimd-executable
    "~/.eclipse/org.eclipse.platform_4.10.0_155965261_linux_gtk_x86_64/eclimd")
+ '(fci-rule-color "#5B6268")
  '(flycheck-color-mode-line-face-to-color (quote mode-line-buffer-id))
  '(frame-background-mode (quote dark))
+ '(jdee-db-active-breakpoint-face-colors (cons "#2b2a27" "#ff5d38"))
+ '(jdee-db-requested-breakpoint-face-colors (cons "#2b2a27" "#98be65"))
+ '(jdee-db-spec-breakpoint-face-colors (cons "#2b2a27" "#3f444a"))
  '(line-number-mode nil)
+ '(objed-cursor-color "#ff5d38")
  '(package-selected-packages
    (quote
     (php-mode god-mode evil all-the-icons all-the-icons-dired all-the-icons-gnus vterm yaml-mode ggtags flycheck-clang-analyzer flycheck-irony company-irony company-irony-c-headers free-keys powershell flymd npm-mode ac-emacs-eclim irony no-littering markdown-mode web-mode rainbow-mode eclim company company-emacs-eclim flycheck-popup-tip magit borland-blue-theme color-theme-sanityinc-tomorrow xresources-theme test-c chess purp-theme jazz-theme seethru neotree tide tss dotnet spacemacs-theme doom-themes dumb-jump omnisharp flycheck color-theme-modern)))
+ '(pdf-view-midnight-colors (cons "#ede0ce" "#2b2a27"))
+ '(rustic-ansi-faces
+   ["#2b2a27" "#ff5d38" "#98be65" "#bcd42a" "#51afef" "#c678dd" "#46D9FF" "#ede0ce"])
+ '(vc-annotate-background "#2b2a27")
+ '(vc-annotate-color-map
+   (list
+    (cons 20 "#98be65")
+    (cons 40 "#a4c551")
+    (cons 60 "#b0cc3d")
+    (cons 80 "#bcd42a")
+    (cons 100 "#c1a623")
+    (cons 120 "#c5781c")
+    (cons 140 "#cb4b16")
+    (cons 160 "#c95a58")
+    (cons 180 "#c7699a")
+    (cons 200 "#c678dd")
+    (cons 220 "#d96fa6")
+    (cons 240 "#ec666f")
+    (cons 260 "#ff5d38")
+    (cons 280 "#cf563c")
+    (cons 300 "#9f5041")
+    (cons 320 "#6f4a45")
+    (cons 340 "#5B6268")
+    (cons 360 "#5B6268")))
  '(vc-annotate-very-old-color nil)
  '(window-divider-mode nil))
 (custom-set-faces
@@ -98,7 +129,43 @@
 ;; custom elisp files
 (add-to-list 'load-path (expand-file-name "~/.emacs.d/elisp"))
 
+(setq text-quoting-style 'grave)
 
+;; fundamental mode
+(setq initial-major-mode 'fundamental-mode) 
+(setq initial-scratch-message
+"                             jM$$s              (M$$c
+                            (M$$$Se            8X$440
+                            EE$$$$j     '.    .M$$$$0
+                            MM$$$$p,     |    ;MM$$$`
+                             M$$$$X;nnnnnnNnnnMM$$$p
+                             MMM$$$$$nnnnnnNnn$$$$$,
+                           ,SMM$$$$$$$$$$$$$$$$$$$$p,
+                          ,SMMM\"._`;$$$$$333$$$r`,_\"$m    ..
+                 ~~+,...,O$KK$$ \"%‘$$$$$M###M$$.(%\" /)$\\-’‘
+                ~.....,.OMMMO4$$p;q$$$$$$$$$$$$p;qo$$$=-~’’’’‘‘
+                      _MMMMMM$$$$$$$$$$$$$$$$$$$$$$$$$$$-~.,,,_
+                 ~--’’’MMMMMM$$$$$$$$$$$MMM$$$$$$$$$$$$$p,
+                    .eMMMMMMM$$$$$$$$$$$$$$$$$$$$$$$$$$$$$c
+                   oMMMMMMMMMM$r\"`              \"C$$$$$$$$$$,
+                 0MMMMMMMMM\"`          ____         ‘^4$$$$$$$,
+                4MMMMMMMP:  ,,,,    .oXP\"\"tP   .OMM;.  ‘\"$$.$$$$
+               0PMMMMMP:::.O*\"\"t’              ’‘ ‘’M.    ’$.$$$$
+              dMMMMMMP:::         ,.,     ,ooo,      __    ’$$$$$;
+             ,MMMMMM{:::.mm.    oD\"\"oM   ;^\"\"^&;.  .$\"\"$.   ’$$$$$.
+             ;MMMMMM:::i’\"^t‘                                $$$$$$             
+             #MMMMMM::::                                     ’$$$$$$
+             IMMMMMM:::.                                      $$$$$$
+             {MMMMM&::::                                      $$$$$$
+              ’MMMMM::::                                     ’$$$$$’
+               ’MMM:::::.                                    $$$$$’
+                ’MM::::::._,,_                       _..._ ..’$$$$’
+                 VV::::;d$$$$$op.                 .cdM’$$$$$:$$$’
+                   :::;MM$$$$$$$$.              .MM;$$$$$$$$o$$’
+                    ::MM$$$$$$$$$$.           .;MMM$$$$$$$$$;
+                     :MM$$$$$$$$$$$::........::MMX$$$$$$$$$j
+                      ’MX$$$$$$$$$$::::::::::::MMX$$$$$$$$$‘
+                        $$$$$$$$$$0::::::::::::9MM$$$$$$$$‘")
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; multi-scratch config
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -123,7 +190,7 @@
   "CLose buffer (obtained from EVENT) on clicking header line"
   (interactive "e")
   (let ((selected-tab-name
-         (replace-regexp-in-string "\*" "" (substring (string-trim (car (posn-string (event-start event)))) 2))))
+         (substring (string-trim (car (posn-string (event-start event)))) 2)))
     (when (eq 3 (- (length selected-tab-name)
                    (or (cl-search "..." selected-tab-name) 0)))
       (setq selected-tab-name (substring selected-tab-name 0 -3)))
@@ -134,6 +201,52 @@
 (global-set-key (kbd "<C-prior>") 'awesome-tab-backward)
 (global-set-key [header-line mouse-2] #'awesome-tab-click-close-tab)
 (global-set-key [header-line mouse-3] #'multi-scratch-new)
+
+;; Tab groups
+
+(defun awesome-tab-buffer-groups-mine ()
+  "`awesome-tab-buffer-groups' control buffers' group rules.
+
+Group awesome-tab with mode if buffer is derived from `eshell-mode' `emacs-lisp-mode' `dired-mode' `org-mode' `magit-mode'.
+All buffer name start with * will group to \"Emacs\".
+Other buffer group by `awesome-tab-get-group-name' with project name."
+  (list
+   (cond
+    ((and
+      (<= 8 (length (buffer-name)))
+      (or
+       (string-equal "*scratch" (substring (buffer-name) 0 8))
+       (string-equal "*multi-s" (substring (buffer-name) 0 8)))
+      )
+     "Scratch")
+    ((memq major-mode '(magit-process-mode
+                        magit-status-mode
+                        magit-diff-mode
+                        magit-log-mode
+                        magit-file-mode
+                        magit-blob-mode
+                        magit-blame-mode
+                        ))
+     "Magit")
+    ((or
+      (string-equal "*PowerShell*" (buffer-name))
+      (derived-mode-p 'shell-mode)
+      (derived-mode-p 'eshell-mode)
+      (derived-mode-p 'term-mode)
+      (derived-mode-p 'vterm-mode))
+     "Terminal")
+    ((derived-mode-p 'emacs-lisp-mode)
+     "Elisp")
+    ((derived-mode-p 'dired-mode)
+     "Dired")
+    ((memq major-mode '(org-mode org-agenda-mode diary-mode))
+     "OrgMode")
+    ((string-equal "*" (substring (buffer-name) 0 1))
+     "Emacs")
+    (t
+     (awesome-tab-get-group-name (current-buffer))))))
+
+(setq awesome-tab-buffer-groups-function 'awesome-tab-buffer-groups-mine)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Aesthetic settings
@@ -327,3 +440,5 @@ of FILE in the current directory, suitable for creation"
 
 ;; On Windows, follow these instructions: https://github.com/d5884/fakecygpty
 ;; on Windows, install msys such that C:/msys64/usr/bin/bash.exe exists
+
+;; M-x all-the-icons-install-fonts

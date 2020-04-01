@@ -26,7 +26,7 @@
  '(ansi-color-names-vector
    ["#2b2a27" "#ff5d38" "#98be65" "#bcd42a" "#51afef" "#c678dd" "#46D9FF" "#ede0ce"])
  '(beacon-color "#f2777a")
- '(custom-enabled-themes (quote (doom-tomorrow-day)))
+ '(custom-enabled-themes (quote (feng-shui)))
  '(custom-safe-themes t)
  '(eclim-eclipse-dirs (quote ("/usr/lib/eclipse")))
  '(eclim-executable
@@ -36,7 +36,7 @@
    "~/.eclipse/org.eclipse.platform_4.10.0_155965261_linux_gtk_x86_64/eclimd")
  '(fci-rule-color "#5B6268")
  '(flycheck-color-mode-line-face-to-color (quote mode-line-buffer-id))
- '(frame-background-mode (quote dark))
+ '(frame-background-mode (quote light))
  '(jdee-db-active-breakpoint-face-colors (cons "#2b2a27" "#ff5d38"))
  '(jdee-db-requested-breakpoint-face-colors (cons "#2b2a27" "#98be65"))
  '(jdee-db-spec-breakpoint-face-colors (cons "#2b2a27" "#3f444a"))
@@ -44,7 +44,7 @@
  '(objed-cursor-color "#ff5d38")
  '(package-selected-packages
    (quote
-    (php-mode god-mode evil all-the-icons all-the-icons-dired all-the-icons-gnus vterm yaml-mode ggtags flycheck-clang-analyzer flycheck-irony company-irony company-irony-c-headers free-keys powershell flymd npm-mode ac-emacs-eclim irony no-littering markdown-mode web-mode rainbow-mode eclim company company-emacs-eclim flycheck-popup-tip magit borland-blue-theme color-theme-sanityinc-tomorrow xresources-theme test-c chess purp-theme jazz-theme seethru neotree tide tss dotnet spacemacs-theme doom-themes dumb-jump omnisharp flycheck color-theme-modern)))
+    (jazz-theme purp-theme use-package php-mode god-mode evil all-the-icons all-the-icons-dired all-the-icons-gnus vterm yaml-mode ggtags flycheck-clang-analyzer flycheck-irony company-irony company-irony-c-headers free-keys powershell flymd npm-mode ac-emacs-eclim irony no-littering markdown-mode web-mode rainbow-mode eclim company company-emacs-eclim flycheck-popup-tip magit color-theme-sanityinc-tomorrow test-c chess seethru neotree tide tss dotnet spacemacs-theme doom-themes dumb-jump omnisharp flycheck color-theme-modern)))
  '(pdf-view-midnight-colors (cons "#ede0ce" "#2b2a27"))
  '(rustic-ansi-faces
    ["#2b2a27" "#ff5d38" "#98be65" "#bcd42a" "#51afef" "#c678dd" "#46D9FF" "#ede0ce"])
@@ -166,6 +166,11 @@
                      :MM$$$$$$$$$$$::........::MMX$$$$$$$$$j
                       ’MX$$$$$$$$$$::::::::::::MMX$$$$$$$$$‘
                         $$$$$$$$$$0::::::::::::9MM$$$$$$$$‘")
+
+
+;; Tab width to 4 
+(setq default-tab-width 4)
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; multi-scratch config
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -277,6 +282,21 @@ Other buffer group by `awesome-tab-get-group-name' with project name."
   )
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Elisp
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(add-hook 'emacs-lisp-mode-hook 'display-line-numbers-mode)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; HTML / CSS / PHP
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(add-hook 'html-mode-hook 'display-line-numbers-mode)
+(add-hook 'css-mode-hook 'display-line-numbers-mode)
+(add-hook 'scss-mode-hook 'display-line-numbers-mode)
+(add-hook 'php-mode-hook 'display-line-numbers-mode)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; .NET/ Omnisharp setup
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
@@ -288,6 +308,7 @@ Other buffer group by `awesome-tab-get-group-name' with project name."
   '(add-to-list 'company-backends 'company-omnisharp))
 (add-hook 'csharp-mode-hook #'company-mode)
 (add-hook 'csharp-mode-hook #'flycheck-mode)
+(add-hook 'csharp-mode-hook #'display-line-numbers-mode)
 
 ;; Customized 
 (setq omnisharp-server-executable-path "/usr/local/bin/omnisharp")
@@ -304,6 +325,7 @@ Other buffer group by `awesome-tab-get-group-name' with project name."
   (add-hook 'java-mode-hook 'my-java-mode-hook)
   (company-emacs-eclim-setup)
   (ac-emacs-eclim-config))
+(add-hook 'java-mode-hook #'display-line-numbers-mode)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Typescript setup
@@ -321,6 +343,7 @@ Other buffer group by `awesome-tab-get-group-name' with project name."
 (setq company-tooltip-align-annotations t)
 (add-hook 'before-save-hook 'tide-format-before-save)
 (add-hook 'typescript-mode-hook #'setup-tide-mode)
+(add-hook 'typescript-mode-hook #'display-line-numbers-mode)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Setup initial term page
@@ -407,6 +430,10 @@ of FILE in the current directory, suitable for creation"
 (add-hook 'c++-mode-hook 'flycheck-mode)
 (add-hook 'c-mode-hook 'flycheck-mode)
 
+;; line #s
+(add-hook 'c++-mode-hook #'display-line-numbers-mode)
+(add-hook 'c-mode-hook #'display-line-numbers-mode)
+
 ;; Integrating Irony with Flycheck
 
 (eval-after-load 'flycheck
@@ -420,6 +447,8 @@ of FILE in the current directory, suitable for creation"
 ;; Set the buffer size to 64K on Windows (from the original 4K)
 (when (boundp 'w32-pipe-buffer-size)
   (setq irony-server-w32-pipe-buffer-size (* 64 1024)))
+
+
 
 ;; Remember to run irony-install-server
 

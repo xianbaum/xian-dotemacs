@@ -8,7 +8,6 @@
 
 ;https://emacs.stackexchange.com/questions/51721/failed-to-download-gnu-archive
 (setq package-check-signature nil)
-(package-initialize)
 
 (require 'package)
 (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/"))
@@ -26,7 +25,7 @@
  '(ansi-color-names-vector
    ["#2b2a27" "#ff5d38" "#98be65" "#bcd42a" "#51afef" "#c678dd" "#46D9FF" "#ede0ce"])
  '(beacon-color "#f2777a")
- '(custom-enabled-themes (quote (feng-shui)))
+ '(custom-enabled-themes (quote (sanityinc-tomorrow-blue)))
  '(custom-safe-themes t)
  '(eclim-eclipse-dirs (quote ("/usr/lib/eclipse")))
  '(eclim-executable
@@ -122,6 +121,9 @@
 
 ;; bind compile
 (global-set-key (kbd "C-x g") 'compile)
+
+;; dumb jump
+(global-set-key (kbd "C-M-g") 'dumb-jump-go)
 
 ;; string manipulation
 (require 'subr-x)
@@ -255,13 +257,13 @@ Other buffer group by `awesome-tab-get-group-name' with project name."
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Aesthetic settings
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
 (column-number-mode 1)
 (menu-bar-mode 0)
 (tool-bar-mode 0)
 (seethru 95)
-(set-default-font "Source Code Pro-10")
+(set-frame-font "Source Code Pro-10")
 (setq ring-bell-function 'ignore)
 
 ;; all-the-icons neotree
@@ -374,7 +376,7 @@ of FILE in the current directory, suitable for creation"
       if (equal d root)
 			return nil))))
 (require 'compile)
-(add-hook 'c-mode-hook (lambda () (set (make-local-variable 'compile-command) (format "cd %s && make -i" (get-closest-pathname)))))
+(add-hook 'c-mode-hook (lambda () (set (make-local-variable 'compile-command) (format "cd %s && make -k" (get-closest-pathname)))))
 
 ;;4 tabs, linux style (from GNU style)
 
@@ -471,3 +473,4 @@ of FILE in the current directory, suitable for creation"
 ;; on Windows, install msys such that C:/msys64/usr/bin/bash.exe exists
 
 ;; M-x all-the-icons-install-fonts
+(put 'upcase-region 'disabled nil)

@@ -12,6 +12,8 @@
 (require 'package)
 (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/"))
 
+(package-initialize)
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Custom-set-variable (see generated comment below)
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -474,3 +476,5 @@ of FILE in the current directory, suitable for creation"
 
 ;; M-x all-the-icons-install-fonts
 (put 'upcase-region 'disabled nil)
+
+;; run irony-install-server

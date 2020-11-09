@@ -12,7 +12,9 @@
 (require 'package)
 (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/"))
 
-(package-initialize)
+;; I thiiiiink this is only necessary in emacs 26.3
+(when (eq 0 (cl-search "26.3" emacs-version))
+          (package-initialize))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Custom-set-variable (see generated comment below)

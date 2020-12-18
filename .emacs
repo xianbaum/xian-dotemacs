@@ -184,7 +184,10 @@
 (global-set-key [f10] nil)
 
 ;; Disable kill buffer confirmation
+;https://emacs.stackexchange.com/a/14511
 (setq kill-buffer-query-functions (delq 'process-kill-buffer-query-function kill-buffer-query-functions))
+;https://emacs.stackexchange.com/a/52677
+(setq confirm-kill-processes nil)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; multi-scratch config

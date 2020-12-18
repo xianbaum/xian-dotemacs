@@ -177,6 +177,15 @@
 ;; Tab width to 4 
 (setq default-tab-width 4)
 
+;; Bind right click to context menu
+(global-set-key [mouse-3] 'menu-bar-open)
+
+;; Unbind F10 because I like it for other apps
+(global-set-key [f10] nil)
+
+;; Disable kill buffer confirmation
+(setq kill-buffer-query-functions (delq 'process-kill-buffer-query-function kill-buffer-query-functions))
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; multi-scratch config
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -210,8 +219,8 @@
 
 (global-set-key (kbd "<C-next>") 'awesome-tab-forward)
 (global-set-key (kbd "<C-prior>") 'awesome-tab-backward)
-(global-set-key [header-line mouse-2] #'awesome-tab-click-close-tab)
-(global-set-key [header-line mouse-3] #'multi-scratch-new)
+(global-set-key [tab-line mouse-2] #'awesome-tab-click-close-tab)
+(global-set-key [tab-line mouse-3] #'multi-scratch-new)
 
 ;; Tab groups
 
@@ -259,10 +268,14 @@ Other buffer group by `awesome-tab-get-group-name' with project name."
 
 (setq awesome-tab-buffer-groups-function 'awesome-tab-buffer-groups-mine)
 
+;; tab height
+
+(setq awesome-tab-height 100)
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Aesthetic settings
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;
+
 (column-number-mode 1)
 (menu-bar-mode 0)
 (tool-bar-mode 0)
@@ -275,6 +288,17 @@ Other buffer group by `awesome-tab-get-group-name' with project name."
 
 ;; all-the-icons poor performance in windows fix
 (setq inhibit-compacting-font-caches t)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Neotree settings
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+;; https://emacs.stackexchange.com/questions/37678/neotree-window-not-resizable
+;; Set the neo-window-width to the current width of the
+;; neotree window, to trick neotree into resetting the
+;; width back to the actual window width.
+;; Fixes: https://github.com/jaypei/emacs-neotree/issues/262
+(setq neo-window-width 30)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Terminal settings

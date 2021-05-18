@@ -29,25 +29,34 @@
  '(ansi-color-names-vector
    ["#2b2a27" "#ff5d38" "#98be65" "#bcd42a" "#51afef" "#c678dd" "#46D9FF" "#ede0ce"])
  '(beacon-color "#f2777a")
- '(custom-enabled-themes (quote (sanityinc-tomorrow-blue)))
+ '(custom-enabled-themes '(sanityinc-tomorrow-blue))
  '(custom-safe-themes t)
- '(eclim-eclipse-dirs (quote ("/usr/lib/eclipse")))
+ '(eclim-eclipse-dirs '("/usr/lib/eclipse"))
  '(eclim-executable
    "~/.eclipse/org.eclipse.platform_4.10.0_155965261_linux_gtk_x86_64/plugins/org.eclim_2.8.0/bin/eclim")
  '(eclimd-default-workspace "~/prog/eclipse")
  '(eclimd-executable
    "~/.eclipse/org.eclipse.platform_4.10.0_155965261_linux_gtk_x86_64/eclimd")
  '(fci-rule-color "#5B6268")
- '(flycheck-color-mode-line-face-to-color (quote mode-line-buffer-id))
- '(frame-background-mode (quote light))
+ '(flycheck-color-mode-line-face-to-color 'mode-line-buffer-id)
+ '(frame-background-mode 'light)
  '(jdee-db-active-breakpoint-face-colors (cons "#2b2a27" "#ff5d38"))
  '(jdee-db-requested-breakpoint-face-colors (cons "#2b2a27" "#98be65"))
  '(jdee-db-spec-breakpoint-face-colors (cons "#2b2a27" "#3f444a"))
  '(line-number-mode nil)
  '(objed-cursor-color "#ff5d38")
  '(package-selected-packages
-   (quote
-    (jazz-theme purp-theme use-package php-mode god-mode evil all-the-icons all-the-icons-dired all-the-icons-gnus vterm yaml-mode ggtags flycheck-clang-analyzer flycheck-irony company-irony company-irony-c-headers free-keys powershell flymd npm-mode ac-emacs-eclim irony no-littering markdown-mode web-mode rainbow-mode eclim company company-emacs-eclim flycheck-popup-tip magit color-theme-sanityinc-tomorrow test-c chess seethru neotree tide tss dotnet spacemacs-theme doom-themes dumb-jump omnisharp flycheck color-theme-modern)))
+   '(package-selected-packages
+     (#("esh-autosuggest" 0 15
+        (escaped t))
+      #("esh-autosuggest" 0 15
+        (escaped t))
+      "esh-autosuggest" "dockerfile-mode" "dockerfile-mode" ## docker dockerfile-mode esh-autosuggest eshell-syntax-highlighting eshell-outline eshell-git-prompt snow fsharp-mode jazz-theme purp-theme use-package php-mode god-mode evil all-the-icons all-the-icons-dired all-the-icons-gnus vterm yaml-mode ggtags flycheck-clang-analyzer flycheck-irony company-irony company-irony-c-headers free-keys powershell flymd npm-mode ac-emacs-eclim irony no-littering markdown-mode web-mode rainbow-mode eclim company company-emacs-eclim flycheck-popup-tip magit color-theme-sanityinc-tomorrow test-c chess seethru neotree tide tss dotnet spacemacs-theme doom-themes dumb-jump omnisharp flycheck color-theme-modern)
+     #("esh-autosuggest" 0 15
+       (escaped t))
+     #("esh-autosuggest" 0 15
+       (escaped t))
+     "esh-autosuggest" "dockerfile-mode" "dockerfile-mode" ## docker dockerfile-mode esh-autosuggest eshell-syntax-highlighting eshell-outline eshell-git-prompt snow fsharp-mode jazz-theme purp-theme use-package php-mode god-mode evil all-the-icons all-the-icons-dired all-the-icons-gnus vterm yaml-mode ggtags flycheck-clang-analyzer flycheck-irony company-irony company-irony-c-headers free-keys powershell flymd npm-mode ac-emacs-eclim irony no-littering markdown-mode web-mode rainbow-mode eclim company company-emacs-eclim flycheck-popup-tip magit color-theme-sanityinc-tomorrow test-c chess seethru neotree tide tss dotnet spacemacs-theme doom-themes dumb-jump omnisharp flycheck color-theme-modern))
  '(pdf-view-midnight-colors (cons "#ede0ce" "#2b2a27"))
  '(rustic-ansi-faces
    ["#2b2a27" "#ff5d38" "#98be65" "#bcd42a" "#51afef" "#c678dd" "#46D9FF" "#ede0ce"])
@@ -139,7 +148,7 @@
 
 ;; fundamental mode
 (setq initial-major-mode 'fundamental-mode) 
-(setq initial-scratch-message
+(setq totoro-ascii
 "                             jM$$s              (M$$c
                             (M$$$Se            8X$440
                             EE$$$$j     '.    .M$$$$0
@@ -171,8 +180,11 @@
                     ::MM$$$$$$$$$$.           .;MMM$$$$$$$$$;
                      :MM$$$$$$$$$$$::........::MMX$$$$$$$$$j
                       ’MX$$$$$$$$$$::::::::::::MMX$$$$$$$$$‘
-                        $$$$$$$$$$0::::::::::::9MM$$$$$$$$‘")
+")
 
+
+(setq initial-scratch-message totoro-ascii)
+(setq eshell-banner-message totoro-ascii)
 
 ;; Tab width to 4 
 (setq default-tab-width 4)
@@ -188,6 +200,8 @@
 (setq kill-buffer-query-functions (delq 'process-kill-buffer-query-function kill-buffer-query-functions))
 ;https://emacs.stackexchange.com/a/52677
 (setq confirm-kill-processes nil)
+
+
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; multi-scratch config
@@ -222,8 +236,8 @@
 
 (global-set-key (kbd "<C-next>") 'awesome-tab-forward)
 (global-set-key (kbd "<C-prior>") 'awesome-tab-backward)
-(global-set-key [tab-line mouse-2] #'awesome-tab-click-close-tab)
-(global-set-key [tab-line mouse-3] #'multi-scratch-new)
+(global-set-key [header-line mouse-2] #'awesome-tab-click-close-tab)
+(global-set-key [header-line mouse-3] #'multi-scratch-new)
 
 ;; Tab groups
 
@@ -273,7 +287,7 @@ Other buffer group by `awesome-tab-get-group-name' with project name."
 
 ;; tab height
 
-(setq awesome-tab-height 100)
+(setq awesome-tab-height 10)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Aesthetic settings
@@ -507,3 +521,10 @@ of FILE in the current directory, suitable for creation"
 (put 'upcase-region 'disabled nil)
 
 ;; run irony-install-server
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Start page
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(eshell)

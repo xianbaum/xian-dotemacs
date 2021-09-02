@@ -10,11 +10,8 @@
 (setq package-check-signature nil)
 
 (require 'package)
-(add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/"))
 
-;; I thiiiiink this is only necessary in emacs 26.3
-(when (eq 0 (cl-search "26.3" emacs-version))
-          (package-initialize))
+(add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/"))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Custom-set-variable (see generated comment below)
@@ -46,17 +43,17 @@
  '(line-number-mode nil)
  '(objed-cursor-color "#ff5d38")
  '(package-selected-packages
-   '(package-selected-packages
-     (#("esh-autosuggest" 0 15
-        (escaped t))
-      #("esh-autosuggest" 0 15
-        (escaped t))
-      "esh-autosuggest" "dockerfile-mode" "dockerfile-mode" ## docker dockerfile-mode esh-autosuggest eshell-syntax-highlighting eshell-outline eshell-git-prompt snow fsharp-mode jazz-theme purp-theme use-package php-mode god-mode evil all-the-icons all-the-icons-dired all-the-icons-gnus vterm yaml-mode ggtags flycheck-clang-analyzer flycheck-irony company-irony company-irony-c-headers free-keys powershell flymd npm-mode ac-emacs-eclim irony no-littering markdown-mode web-mode rainbow-mode eclim company company-emacs-eclim flycheck-popup-tip magit color-theme-sanityinc-tomorrow test-c chess seethru neotree tide tss dotnet spacemacs-theme doom-themes dumb-jump omnisharp flycheck color-theme-modern)
-     #("esh-autosuggest" 0 15
-       (escaped t))
-     #("esh-autosuggest" 0 15
-       (escaped t))
-     "esh-autosuggest" "dockerfile-mode" "dockerfile-mode" ## docker dockerfile-mode esh-autosuggest eshell-syntax-highlighting eshell-outline eshell-git-prompt snow fsharp-mode jazz-theme purp-theme use-package php-mode god-mode evil all-the-icons all-the-icons-dired all-the-icons-gnus vterm yaml-mode ggtags flycheck-clang-analyzer flycheck-irony company-irony company-irony-c-headers free-keys powershell flymd npm-mode ac-emacs-eclim irony no-littering markdown-mode web-mode rainbow-mode eclim company company-emacs-eclim flycheck-popup-tip magit color-theme-sanityinc-tomorrow test-c chess seethru neotree tide tss dotnet spacemacs-theme doom-themes dumb-jump omnisharp flycheck color-theme-modern))
+   '(awesome-tab helm-tramp helm-wikipedia helm flycheck-irony irony gdb-mi hydra lv quelpa-use-package quelpa meson-mode rust-mode kotlin-mode package-selected-packages
+                 (#("esh-autosuggest" 0 15
+                    (escaped t))
+                  #("esh-autosuggest" 0 15
+                    (escaped t))
+                  "esh-autosuggest" "dockerfile-mode" "dockerfile-mode" ## docker dockerfile-mode esh-autosuggest eshell-syntax-highlighting eshell-outline eshell-git-prompt snow fsharp-mode jazz-theme purp-theme use-package php-mode god-mode evil all-the-icons all-the-icons-dired all-the-icons-gnus vterm yaml-mode ggtags flycheck-clang-analyzer flycheck-irony company-irony company-irony-c-headers free-keys powershell flymd npm-mode ac-emacs-eclim irony no-littering markdown-mode web-mode rainbow-mode eclim company company-emacs-eclim flycheck-popup-tip magit color-theme-sanityinc-tomorrow test-c chess seethru neotree tide tss dotnet spacemacs-theme doom-themes dumb-jump omnisharp flycheck color-theme-modern)
+                 #("esh-autosuggest" 0 15
+                   (escaped t))
+                 #("esh-autosuggest" 0 15
+                   (escaped t))
+                 "esh-autosuggest" "dockerfile-mode" "dockerfile-mode" ## docker dockerfile-mode esh-autosuggest eshell-syntax-highlighting eshell-outline eshell-git-prompt snow fsharp-mode jazz-theme purp-theme use-package php-mode god-mode evil all-the-icons all-the-icons-dired all-the-icons-gnus vterm yaml-mode ggtags flycheck-clang-analyzer free-keys powershell flymd npm-mode ac-emacs-eclim no-littering markdown-mode web-mode rainbow-mode eclim company company-emacs-eclim flycheck-popup-tip magit color-theme-sanityinc-tomorrow test-c chess neotree tide tss dotnet spacemacs-theme doom-themes dumb-jump omnisharp flycheck color-theme-modern))
  '(pdf-view-midnight-colors (cons "#ede0ce" "#2b2a27"))
  '(rustic-ansi-faces
    ["#2b2a27" "#ff5d38" "#98be65" "#bcd42a" "#51afef" "#c678dd" "#46D9FF" "#ede0ce"])
@@ -111,6 +108,28 @@
 (unless (package-installed-p 'use-package)
   (package-refresh-contents)
   (package-install 'use-package))
+
+;; bootstrap quelpa to use-package
+(setq quelpa-upgrade-interval 7)
+
+(use-package quelpa-use-package
+  :demand t
+  :init
+  (setq quelpa-use-package-inhibit-loading-quelpa t)
+  (unless (package-installed-p 'quelpa-use-package)
+    (quelpa
+     '(quelpa-use-package
+       :fetcher git
+       :url "https://github.com/quelpa/quelpa-use-package.git"))))
+
+(require 'quelpa-use-package)
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Quelpa
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+;;(use-package gdb-mi :quelpa (gdb-mi :fetcher git
+;;                                    :url "https://github.com/weirdNox/emacs-gdb.git"
+;;                                    :files ("*.el" "*.c" "*.h" "Makefile")))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; base config
@@ -182,10 +201,6 @@
                       ’MX$$$$$$$$$$::::::::::::MMX$$$$$$$$$‘
 ")
 
-
-(setq initial-scratch-message totoro-ascii)
-(setq eshell-banner-message totoro-ascii)
-
 ;; Tab width to 4 
 (setq default-tab-width 4)
 
@@ -201,7 +216,7 @@
 ;https://emacs.stackexchange.com/a/52677
 (setq confirm-kill-processes nil)
 
-
+(setq eshell-banner-message "")
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; multi-scratch config
@@ -213,8 +228,14 @@
 ;; awesome-tab config
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
+(use-package awesome-tab
+  :quelpa (awesome-tab :fetcher github :repo "manateelazycat/awesome-tab"),
+  :files ("*.el"))
+
 ;; Setup git packages
 ;; https://github.com/manateelazycat/awesome-tab
+
+
 (require 'awesome-tab)
 (awesome-tab-mode t)
 
@@ -236,8 +257,8 @@
 
 (global-set-key (kbd "<C-next>") 'awesome-tab-forward)
 (global-set-key (kbd "<C-prior>") 'awesome-tab-backward)
-(global-set-key [header-line mouse-2] #'awesome-tab-click-close-tab)
-(global-set-key [header-line mouse-3] #'multi-scratch-new)
+(global-set-key [tab-line mouse-2] #'awesome-tab-click-close-tab)
+(global-set-key [tab-line mouse-3] #'multi-scratch-new)
 
 ;; Tab groups
 
@@ -287,7 +308,7 @@ Other buffer group by `awesome-tab-get-group-name' with project name."
 
 ;; tab height
 
-(setq awesome-tab-height 10)
+(setq awesome-tab-height 110)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Aesthetic settings
@@ -296,7 +317,6 @@ Other buffer group by `awesome-tab-get-group-name' with project name."
 (column-number-mode 1)
 (menu-bar-mode 0)
 (tool-bar-mode 0)
-(seethru 95)
 (set-frame-font "Source Code Pro-10")
 (setq ring-bell-function 'ignore)
 
@@ -305,6 +325,23 @@ Other buffer group by `awesome-tab-get-group-name' with project name."
 
 ;; all-the-icons poor performance in windows fix
 (setq inhibit-compacting-font-caches t)
+
+;; hide messages buffer
+
+(setq-default message-log-max nil)
+(kill-buffer "*Messages*")
+
+;; hide startup message
+(put 'inhibit-startup-echo-area-message 'saved-value t)
+(setq inhibit-startup-echo-area-message (user-login-name))
+
+
+;; default frame size
+(add-to-list 'default-frame-alist '(height . 36))
+(add-to-list 'default-frame-alist '(width . 100))
+
+;; transparency
+(set-frame-parameter (selected-frame) 'alpha '(95 100))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Neotree settings
@@ -406,9 +443,9 @@ Other buffer group by `awesome-tab-get-group-name' with project name."
 
 ;; Running Make with the closest Makefile
 ;; Modified, from https://www.emacswiki.org/emacs/CompileCommand
-(require 'cl) ; If you don't have it already
+(require 'cl-lib) ; If you don't have it already
 
-(defun* get-closest-pathname (&optional (file "Makefile"))
+(cl-defun get-closest-pathname (&optional (file "Makefile"))
   "Determine the pathname of the first instance of FILE starting from the current directory towards root.
 This may not do the correct thing in presence of links. If it does not find FILE, then it shall return the name
 of FILE in the current directory, suitable for creation"
@@ -521,6 +558,30 @@ of FILE in the current directory, suitable for creation"
 (put 'upcase-region 'disabled nil)
 
 ;; run irony-install-server
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; aliases and scripts
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(defun webmify (file)
+  "Converts a file to webm using 'ffmpeg'"
+  (shell-command
+   (concat "ffmpeg -i " default-directory file " -vf scale=640:-1 -pass 1 -y -c:v libvpx -lag-in-frames 25 -auto-alt-ref 1 -b:v 400K -deadline best -cpu-used 0 -an -f webm nul && ffmpeg -i "  default-directory file" -vf scale=640:-1 -pass 2 -y -c:v libvpx -lag-in-frames 25 -auto-alt-ref 1 -b:v 400K -deadline best -cpu-used 0 -an " default-directory file "_out.webm &")))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; eshell config
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+
+
+(setq eshell-rc-script
+"webmify() { ffmpeg -i "$@" -vf scale=640:-1 -pass 1 -y -c:v libvpx -lag-in-frames 25 -auto-alt-ref 1 -b:v 400K -deadline best -cpu-used 0 -an -f webm nul && ffmpeg -i "$1" -vf scale=640:-1 -pass 2 -y -c:v libvpx -lag-in-frames 25 -auto-alt-ref 1 -b:v 400K -deadline best -cpu-used 0 -an "$@_out.webm" ;}
+
+alias ls='ls --color=auto'
+
+source /usr/share/doc/pkgfile/command-not-found.bash
+
+export DOTNET_CLI_TELEMETRY_OPTOUT=1")
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;

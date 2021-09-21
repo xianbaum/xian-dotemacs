@@ -25,6 +25,8 @@
    [default bold shadow italic underline bold bold-italic bold])
  '(ansi-color-names-vector
    ["#2b2a27" "#ff5d38" "#98be65" "#bcd42a" "#51afef" "#c678dd" "#46D9FF" "#ede0ce"])
+ '(auth-source-save-behavior nil)
+ '(aweshell-auto-suggestion-p nil)
  '(beacon-color "#f2777a")
  '(custom-enabled-themes '(sanityinc-tomorrow-blue))
  '(custom-safe-themes t)
@@ -34,26 +36,22 @@
  '(eclimd-default-workspace "~/prog/eclipse")
  '(eclimd-executable
    "~/.eclipse/org.eclipse.platform_4.10.0_155965261_linux_gtk_x86_64/eclimd")
+ '(exwm-floating-border-color "#011417")
  '(fci-rule-color "#5B6268")
  '(flycheck-color-mode-line-face-to-color 'mode-line-buffer-id)
  '(frame-background-mode 'light)
+ '(highlight-tail-colors
+   ((("#0e332f" "#0e332f" "green")
+     . 0)
+    (("#06343d" "#06343d" "brightcyan")
+     . 20)))
  '(jdee-db-active-breakpoint-face-colors (cons "#2b2a27" "#ff5d38"))
  '(jdee-db-requested-breakpoint-face-colors (cons "#2b2a27" "#98be65"))
  '(jdee-db-spec-breakpoint-face-colors (cons "#2b2a27" "#3f444a"))
  '(line-number-mode nil)
  '(objed-cursor-color "#ff5d38")
  '(package-selected-packages
-   '(awesome-tab helm-tramp helm-wikipedia helm flycheck-irony irony gdb-mi hydra lv quelpa-use-package quelpa meson-mode rust-mode kotlin-mode package-selected-packages
-                 (#("esh-autosuggest" 0 15
-                    (escaped t))
-                  #("esh-autosuggest" 0 15
-                    (escaped t))
-                  "esh-autosuggest" "dockerfile-mode" "dockerfile-mode" ## docker dockerfile-mode esh-autosuggest eshell-syntax-highlighting eshell-outline eshell-git-prompt snow fsharp-mode jazz-theme purp-theme use-package php-mode god-mode evil all-the-icons all-the-icons-dired all-the-icons-gnus vterm yaml-mode ggtags flycheck-clang-analyzer flycheck-irony company-irony company-irony-c-headers free-keys powershell flymd npm-mode ac-emacs-eclim irony no-littering markdown-mode web-mode rainbow-mode eclim company company-emacs-eclim flycheck-popup-tip magit color-theme-sanityinc-tomorrow test-c chess seethru neotree tide tss dotnet spacemacs-theme doom-themes dumb-jump omnisharp flycheck color-theme-modern)
-                 #("esh-autosuggest" 0 15
-                   (escaped t))
-                 #("esh-autosuggest" 0 15
-                   (escaped t))
-                 "esh-autosuggest" "dockerfile-mode" "dockerfile-mode" ## docker dockerfile-mode esh-autosuggest eshell-syntax-highlighting eshell-outline eshell-git-prompt snow fsharp-mode jazz-theme purp-theme use-package php-mode god-mode evil all-the-icons all-the-icons-dired all-the-icons-gnus vterm yaml-mode ggtags flycheck-clang-analyzer free-keys powershell flymd npm-mode ac-emacs-eclim no-littering markdown-mode web-mode rainbow-mode eclim company company-emacs-eclim flycheck-popup-tip magit color-theme-sanityinc-tomorrow test-c chess neotree tide tss dotnet spacemacs-theme doom-themes dumb-jump omnisharp flycheck color-theme-modern))
+   '(forge "fortune" company-irony-c-headers howdoyou aweshell jdee helm-eww pacmacs bind-key csharp-mode gitlab typescript-mode awesome-tab helm-tramp helm-wikipedia helm flycheck-irony irony gdb-mi hydra lv quelpa-use-package quelpa meson-mode rust-mode kotlin-mode package-selected-packages docker dockerfile-mode esh-autosuggest eshell-syntax-highlighting eshell-outline eshell-git-prompt snow fsharp-mode jazz-theme purp-theme use-package php-mode god-mode evil all-the-icons all-the-icons-dired all-the-icons-gnus vterm yaml-mode ggtags flycheck-clang-analyzer free-keys powershell flymd npm-mode ac-emacs-eclim no-littering markdown-mode web-mode rainbow-mode eclim company company-emacs-eclim flycheck-popup-tip magit color-theme-sanityinc-tomorrow test-c chess neotree tide tss dotnet spacemacs-theme doom-themes dumb-jump omnisharp flycheck color-theme-modern))
  '(pdf-view-midnight-colors (cons "#ede0ce" "#2b2a27"))
  '(rustic-ansi-faces
    ["#2b2a27" "#ff5d38" "#98be65" "#bcd42a" "#51afef" "#c678dd" "#46D9FF" "#ede0ce"])
@@ -222,7 +220,7 @@
 ;; multi-scratch config
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(require 'multi-scratch)
+;(require 'multi-scratch)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; awesome-tab config
@@ -332,8 +330,8 @@ Other buffer group by `awesome-tab-get-group-name' with project name."
 (kill-buffer "*Messages*")
 
 ;; hide startup message
-(put 'inhibit-startup-echo-area-message 'saved-value t)
-(setq inhibit-startup-echo-area-message (user-login-name))
+;;(put 'inhibit-startup-echo-area-message 'saved-value t)
+;;(setq inhibit-startup-echo-area-message (user-login-name))
 
 
 ;; default frame size
@@ -366,10 +364,11 @@ Other buffer group by `awesome-tab-get-group-name' with project name."
   )
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Elisp
+;; General
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (add-hook 'emacs-lisp-mode-hook 'display-line-numbers-mode)
+(setq completion-ignore-case  t)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; HTML / CSS / PHP
@@ -571,17 +570,14 @@ of FILE in the current directory, suitable for creation"
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; eshell config
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(require 'esh-module)
+(add-to-list 'eshell-modules-list 'eshell-tramp)
 
+(use-package aweshell
+  :quelpa (aweshell :fetcher github :repo "manateelazycat/aweshell"),
+  :files ("*.el"))
 
-
-(setq eshell-rc-script
-"webmify() { ffmpeg -i "$@" -vf scale=640:-1 -pass 1 -y -c:v libvpx -lag-in-frames 25 -auto-alt-ref 1 -b:v 400K -deadline best -cpu-used 0 -an -f webm nul && ffmpeg -i "$1" -vf scale=640:-1 -pass 2 -y -c:v libvpx -lag-in-frames 25 -auto-alt-ref 1 -b:v 400K -deadline best -cpu-used 0 -an "$@_out.webm" ;}
-
-alias ls='ls --color=auto'
-
-source /usr/share/doc/pkgfile/command-not-found.bash
-
-export DOTNET_CLI_TELEMETRY_OPTOUT=1")
+(setq eshell-rc-script "export DOTNET_CLI_TELEMETRY_OPTOUT=1")
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;

@@ -147,7 +147,9 @@
 (setq inhibit-splash-screen t)
 
 ;; disable tab indent globally
-(setq-default indent-tabs-mode nil)
+;; (setq-default indent-tabs-mode nil)
+;; I changed my mind lol
+(setq-default tab-width 4)
 
 ;; bind compile
 (global-set-key (kbd "C-x g") 'compile)

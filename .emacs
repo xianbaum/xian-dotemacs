@@ -28,7 +28,7 @@
  '(auth-source-save-behavior nil)
  '(aweshell-auto-suggestion-p nil)
  '(beacon-color "#f2777a")
- '(custom-enabled-themes '(sanityinc-tomorrow-blue))
+ '(custom-enabled-themes '(doom-outrun-electric))
  '(custom-safe-themes t)
  '(eclim-eclipse-dirs '("/usr/lib/eclipse"))
  '(eclim-executable
@@ -42,40 +42,40 @@
  '(frame-background-mode 'light)
  '(highlight-tail-colors
    ((("#0e332f" "#0e332f" "green")
-     . 0)
-    (("#06343d" "#06343d" "brightcyan")
-     . 20)))
+	 . 0)
+	(("#06343d" "#06343d" "brightcyan")
+	 . 20)))
  '(jdee-db-active-breakpoint-face-colors (cons "#2b2a27" "#ff5d38"))
  '(jdee-db-requested-breakpoint-face-colors (cons "#2b2a27" "#98be65"))
  '(jdee-db-spec-breakpoint-face-colors (cons "#2b2a27" "#3f444a"))
  '(line-number-mode nil)
  '(objed-cursor-color "#ff5d38")
  '(package-selected-packages
-   '(forge "fortune" company-irony-c-headers howdoyou aweshell jdee helm-eww pacmacs bind-key csharp-mode gitlab typescript-mode awesome-tab helm-tramp helm-wikipedia helm flycheck-irony irony gdb-mi hydra lv quelpa-use-package quelpa meson-mode rust-mode kotlin-mode package-selected-packages docker dockerfile-mode esh-autosuggest eshell-syntax-highlighting eshell-outline eshell-git-prompt snow fsharp-mode jazz-theme purp-theme use-package php-mode god-mode evil all-the-icons all-the-icons-dired all-the-icons-gnus vterm yaml-mode ggtags flycheck-clang-analyzer free-keys powershell flymd npm-mode ac-emacs-eclim no-littering markdown-mode web-mode rainbow-mode eclim company company-emacs-eclim flycheck-popup-tip magit color-theme-sanityinc-tomorrow test-c chess neotree tide tss dotnet spacemacs-theme doom-themes dumb-jump omnisharp flycheck color-theme-modern))
+   '(eshell-prompt-extras forge "fortune" company-irony-c-headers howdoyou aweshell jdee helm-eww pacmacs bind-key csharp-mode gitlab typescript-mode awesome-tab helm-tramp helm-wikipedia helm flycheck-irony irony gdb-mi hydra lv quelpa-use-package quelpa meson-mode rust-mode kotlin-mode package-selected-packages docker dockerfile-mode esh-autosuggest eshell-syntax-highlighting eshell-outline eshell-git-prompt snow fsharp-mode jazz-theme purp-theme use-package php-mode god-mode evil all-the-icons all-the-icons-dired all-the-icons-gnus vterm yaml-mode ggtags flycheck-clang-analyzer free-keys powershell flymd npm-mode ac-emacs-eclim no-littering markdown-mode web-mode rainbow-mode eclim company company-emacs-eclim flycheck-popup-tip magit color-theme-sanityinc-tomorrow test-c chess neotree tide tss dotnet spacemacs-theme doom-themes dumb-jump omnisharp flycheck color-theme-modern))
  '(pdf-view-midnight-colors (cons "#ede0ce" "#2b2a27"))
  '(rustic-ansi-faces
    ["#2b2a27" "#ff5d38" "#98be65" "#bcd42a" "#51afef" "#c678dd" "#46D9FF" "#ede0ce"])
  '(vc-annotate-background "#2b2a27")
  '(vc-annotate-color-map
    (list
-    (cons 20 "#98be65")
-    (cons 40 "#a4c551")
-    (cons 60 "#b0cc3d")
-    (cons 80 "#bcd42a")
-    (cons 100 "#c1a623")
-    (cons 120 "#c5781c")
-    (cons 140 "#cb4b16")
-    (cons 160 "#c95a58")
-    (cons 180 "#c7699a")
-    (cons 200 "#c678dd")
-    (cons 220 "#d96fa6")
-    (cons 240 "#ec666f")
-    (cons 260 "#ff5d38")
-    (cons 280 "#cf563c")
-    (cons 300 "#9f5041")
-    (cons 320 "#6f4a45")
-    (cons 340 "#5B6268")
-    (cons 360 "#5B6268")))
+	(cons 20 "#98be65")
+	(cons 40 "#a4c551")
+	(cons 60 "#b0cc3d")
+	(cons 80 "#bcd42a")
+	(cons 100 "#c1a623")
+	(cons 120 "#c5781c")
+	(cons 140 "#cb4b16")
+	(cons 160 "#c95a58")
+	(cons 180 "#c7699a")
+	(cons 200 "#c678dd")
+	(cons 220 "#d96fa6")
+	(cons 240 "#ec666f")
+	(cons 260 "#ff5d38")
+	(cons 280 "#cf563c")
+	(cons 300 "#9f5041")
+	(cons 320 "#6f4a45")
+	(cons 340 "#5B6268")
+	(cons 360 "#5B6268")))
  '(vc-annotate-very-old-color nil)
  '(window-divider-mode nil))
 (custom-set-faces
@@ -581,9 +581,20 @@ of FILE in the current directory, suitable for creation"
 
 (setq eshell-rc-script "export DOTNET_CLI_TELEMETRY_OPTOUT=1")
 
+(add-hook 'eshell-mode-hook (lambda () (setenv "TERM" "xterm-256color")))
+
+(add-hook 'eshell-mode-hook #'company-mode)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Tramp config
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(setq tramp-allow-unsafe-temporary-files t)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Start page
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (eshell)
+
+

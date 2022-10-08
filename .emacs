@@ -51,7 +51,7 @@
  '(line-number-mode nil)
  '(objed-cursor-color "#ff5d38")
  '(package-selected-packages
-   '(eshell-prompt-extras forge "fortune" company-irony-c-headers howdoyou aweshell jdee helm-eww pacmacs bind-key csharp-mode gitlab typescript-mode awesome-tab helm-tramp helm-wikipedia helm flycheck-irony irony gdb-mi hydra lv quelpa-use-package quelpa meson-mode rust-mode kotlin-mode package-selected-packages docker dockerfile-mode esh-autosuggest eshell-syntax-highlighting eshell-outline eshell-git-prompt snow fsharp-mode jazz-theme purp-theme use-package php-mode god-mode evil all-the-icons all-the-icons-dired all-the-icons-gnus vterm yaml-mode ggtags flycheck-clang-analyzer free-keys powershell flymd npm-mode ac-emacs-eclim no-littering markdown-mode web-mode rainbow-mode eclim company company-emacs-eclim flycheck-popup-tip magit color-theme-sanityinc-tomorrow test-c chess neotree tide tss dotnet spacemacs-theme doom-themes dumb-jump omnisharp flycheck color-theme-modern))
+   '(company-jedi jedi eshell-prompt-extras forge "fortune" company-irony-c-headers howdoyou aweshell jdee helm-eww pacmacs bind-key csharp-mode gitlab typescript-mode awesome-tab helm-tramp helm-wikipedia helm flycheck-irony irony gdb-mi hydra lv quelpa-use-package quelpa meson-mode rust-mode kotlin-mode package-selected-packages docker dockerfile-mode esh-autosuggest eshell-syntax-highlighting eshell-outline eshell-git-prompt snow fsharp-mode jazz-theme purp-theme use-package php-mode god-mode evil all-the-icons all-the-icons-dired all-the-icons-gnus vterm yaml-mode ggtags flycheck-clang-analyzer free-keys powershell flymd npm-mode ac-emacs-eclim no-littering markdown-mode web-mode rainbow-mode eclim company company-emacs-eclim flycheck-popup-tip magit color-theme-sanityinc-tomorrow test-c chess neotree tide tss dotnet spacemacs-theme doom-themes dumb-jump omnisharp flycheck color-theme-modern))
  '(pdf-view-midnight-colors (cons "#ede0ce" "#2b2a27"))
  '(rustic-ansi-faces
    ["#2b2a27" "#ff5d38" "#98be65" "#bcd42a" "#51afef" "#c678dd" "#46D9FF" "#ede0ce"])
@@ -437,6 +437,14 @@ Other buffer group by `awesome-tab-get-group-name' with project name."
 
 (global-set-key [f8] 'neotree-toggle)
 
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Python setup
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(defun my/python-mode-hook ()
+  (add-to-list 'company-backends 'company-jedi))
+
+(add-hook 'python-mode-hook 'my/python-mode-hook)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; C/C++ setup

@@ -23,12 +23,10 @@
  ;; If there is more than one, they won't work right.
  '(ansi-color-faces-vector
    [default bold shadow italic underline bold bold-italic bold])
- '(ansi-color-names-vector
-   ["#2b2a27" "#ff5d38" "#98be65" "#bcd42a" "#51afef" "#c678dd" "#46D9FF" "#ede0ce"])
  '(auth-source-save-behavior nil)
  '(aweshell-auto-suggestion-p nil)
  '(beacon-color "#f2777a")
- '(custom-enabled-themes '(doom-outrun-electric))
+ '(custom-enabled-themes '(doom-horizon))
  '(custom-safe-themes t)
  '(eclim-eclipse-dirs '("/usr/lib/eclipse"))
  '(eclim-executable
@@ -36,47 +34,11 @@
  '(eclimd-default-workspace "~/prog/eclipse")
  '(eclimd-executable
    "~/.eclipse/org.eclipse.platform_4.10.0_155965261_linux_gtk_x86_64/eclimd")
- '(exwm-floating-border-color "#011417")
- '(fci-rule-color "#5B6268")
  '(flycheck-color-mode-line-face-to-color 'mode-line-buffer-id)
  '(frame-background-mode 'light)
- '(highlight-tail-colors
-   ((("#0e332f" "#0e332f" "green")
-	 . 0)
-	(("#06343d" "#06343d" "brightcyan")
-	 . 20)))
- '(jdee-db-active-breakpoint-face-colors (cons "#2b2a27" "#ff5d38"))
- '(jdee-db-requested-breakpoint-face-colors (cons "#2b2a27" "#98be65"))
- '(jdee-db-spec-breakpoint-face-colors (cons "#2b2a27" "#3f444a"))
  '(line-number-mode nil)
- '(objed-cursor-color "#ff5d38")
  '(package-selected-packages
-   '(company-jedi jedi eshell-prompt-extras forge "fortune" company-irony-c-headers howdoyou aweshell jdee helm-eww pacmacs bind-key csharp-mode gitlab typescript-mode awesome-tab helm-tramp helm-wikipedia helm flycheck-irony irony gdb-mi hydra lv quelpa-use-package quelpa meson-mode rust-mode kotlin-mode package-selected-packages docker dockerfile-mode esh-autosuggest eshell-syntax-highlighting eshell-outline eshell-git-prompt snow fsharp-mode jazz-theme purp-theme use-package php-mode god-mode evil all-the-icons all-the-icons-dired all-the-icons-gnus vterm yaml-mode ggtags flycheck-clang-analyzer free-keys powershell flymd npm-mode ac-emacs-eclim no-littering markdown-mode web-mode rainbow-mode eclim company company-emacs-eclim flycheck-popup-tip magit color-theme-sanityinc-tomorrow test-c chess neotree tide tss dotnet spacemacs-theme doom-themes dumb-jump omnisharp flycheck color-theme-modern))
- '(pdf-view-midnight-colors (cons "#ede0ce" "#2b2a27"))
- '(rustic-ansi-faces
-   ["#2b2a27" "#ff5d38" "#98be65" "#bcd42a" "#51afef" "#c678dd" "#46D9FF" "#ede0ce"])
- '(vc-annotate-background "#2b2a27")
- '(vc-annotate-color-map
-   (list
-	(cons 20 "#98be65")
-	(cons 40 "#a4c551")
-	(cons 60 "#b0cc3d")
-	(cons 80 "#bcd42a")
-	(cons 100 "#c1a623")
-	(cons 120 "#c5781c")
-	(cons 140 "#cb4b16")
-	(cons 160 "#c95a58")
-	(cons 180 "#c7699a")
-	(cons 200 "#c678dd")
-	(cons 220 "#d96fa6")
-	(cons 240 "#ec666f")
-	(cons 260 "#ff5d38")
-	(cons 280 "#cf563c")
-	(cons 300 "#9f5041")
-	(cons 320 "#6f4a45")
-	(cons 340 "#5B6268")
-	(cons 360 "#5B6268")))
- '(vc-annotate-very-old-color nil)
+   '(nyan-mode transmission sudoku "howdoi" howdoi treemacs "treemacs" "treemacs" company-jedi jedi eshell-prompt-extras forge "fortune" company-irony-c-headers howdoyou aweshell jdee helm-eww pacmacs bind-key gitlab typescript-mode awesome-tab helm-tramp helm-wikipedia helm flycheck-irony irony gdb-mi hydra lv quelpa-use-package quelpa meson-mode rust-mode kotlin-mode package-selected-packages docker dockerfile-mode esh-autosuggest eshell-syntax-highlighting eshell-outline eshell-git-prompt snow fsharp-mode jazz-theme purp-theme use-package php-mode god-mode evil all-the-icons all-the-icons-dired all-the-icons-gnus vterm yaml-mode ggtags flycheck-clang-analyzer free-keys powershell flymd npm-mode ac-emacs-eclim no-littering markdown-mode web-mode rainbow-mode eclim company company-emacs-eclim flycheck-popup-tip magit color-theme-sanityinc-tomorrow test-c chess neotree tide tss dotnet spacemacs-theme doom-themes dumb-jump flycheck color-theme-modern))
  '(window-divider-mode nil))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
@@ -344,8 +306,10 @@ Other buffer group by `awesome-tab-get-group-name' with project name."
 (set-frame-parameter (selected-frame) 'alpha '(95 100))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Neotree settings
+;; Side bar settings
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+;; Note: Neotree is no longer ther preferred side bar. Let's use treemacs!
 
 ;; https://emacs.stackexchange.com/questions/37678/neotree-window-not-resizable
 ;; Set the neo-window-width to the current width of the
@@ -353,6 +317,8 @@ Other buffer group by `awesome-tab-get-group-name' with project name."
 ;; width back to the actual window width.
 ;; Fixes: https://github.com/jaypei/emacs-neotree/issues/262
 (setq neo-window-width 30)
+
+(global-set-key [f8] 'treemacs)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Terminal settings
@@ -435,7 +401,7 @@ Other buffer group by `awesome-tab-get-group-name' with project name."
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (add-to-list 'load-path "~/")
 
-(global-set-key [f8] 'neotree-toggle)
+
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -598,6 +564,15 @@ of FILE in the current directory, suitable for creation"
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (setq tramp-allow-unsafe-temporary-files t)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Vterm setup
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+;;(define-key vterm-mode-map (kbd "C-q") #'vterm-send-next-key)
+(add-hook 'vterm-mode
+  (lambda ()
+    (define-key vterm-mode-map (kbd "C-q") #'vterm-send-next-key)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Start page

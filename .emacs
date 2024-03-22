@@ -38,7 +38,7 @@
  '(frame-background-mode 'light)
  '(line-number-mode nil)
  '(package-selected-packages
-   '(nyan-mode transmission sudoku "howdoi" howdoi treemacs "treemacs" "treemacs" company-jedi jedi eshell-prompt-extras forge "fortune" company-irony-c-headers howdoyou aweshell jdee helm-eww pacmacs bind-key gitlab typescript-mode awesome-tab helm-tramp helm-wikipedia helm flycheck-irony irony gdb-mi hydra lv quelpa-use-package quelpa meson-mode rust-mode kotlin-mode package-selected-packages docker dockerfile-mode esh-autosuggest eshell-syntax-highlighting eshell-outline eshell-git-prompt snow fsharp-mode jazz-theme purp-theme use-package php-mode god-mode evil all-the-icons all-the-icons-dired all-the-icons-gnus vterm yaml-mode ggtags flycheck-clang-analyzer free-keys powershell flymd npm-mode ac-emacs-eclim no-littering markdown-mode web-mode rainbow-mode eclim company company-emacs-eclim flycheck-popup-tip magit color-theme-sanityinc-tomorrow test-c chess neotree tide tss dotnet spacemacs-theme doom-themes dumb-jump flycheck color-theme-modern))
+   '(nyan-mode transmission sudoku "howdoi" howdoi treemacs "treemacs" "treemacs" company-jedi jedi eshell-prompt-extras forge "fortune" company-irony-c-headers howdoyou aweshell jdee helm-eww pacmacs bind-key gitlab typescript-mode awesome-tab helm-tramp helm-wikipedia helm flycheck-irony irony gdb-mi hydra lv quelpa-use-package quelpa meson-mode rust-mode kotlin-mode package-selected-packages docker dockerfile-mode esh-autosuggest eshell-syntax-highlighting eshell-outline eshell-git-prompt snow fsharp-mode use-package php-mode god-mode evil all-the-icons all-the-icons-dired all-the-icons-gnus vterm yaml-mode ggtags flycheck-clang-analyzer free-keys powershell flymd npm-mode ac-emacs-eclim no-littering markdown-mode web-mode rainbow-mode eclim company company-emacs-eclim flycheck-popup-tip magit color-theme-sanityinc-tomorrow test-c chess neotree tide tss dotnet spacemacs-theme doom-themes dumb-jump flycheck ))
  '(window-divider-mode nil))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
@@ -296,14 +296,17 @@ Other buffer group by `awesome-tab-get-group-name' with project name."
 ;; hide startup message
 ;;(put 'inhibit-startup-echo-area-message 'saved-value t)
 ;;(setq inhibit-startup-echo-area-message (user-login-name))
-
+(setq inhibit-startup-screen t
+      initial-buffer-choice  nil)
 
 ;; default frame size
-(add-to-list 'default-frame-alist '(height . 36))
-(add-to-list 'default-frame-alist '(width . 100))
+(when window-system
+  (set-frame-position (selected-frame) 0 0)
+  (set-frame-size (selected-frame) 120 40))
+
 
 ;; transparency
-(set-frame-parameter (selected-frame) 'alpha '(95 100))
+; (set-frame-parameter (selected-frame) 'alpha '(95 100))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Side bar settings
@@ -577,7 +580,11 @@ of FILE in the current directory, suitable for creation"
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Start page
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
 (eshell)
+(defalias 'eshell-insert-totoro-text
+   (kmacro "e c h o SPC ( c o n c a t SPC ( p r i n 1 - t o - s t r i n g SPC t o t o r o - a s c i i SPC ' c u s t o m i z e d - v a l u e ) SPC \" SPC SPC SPC SPC SPC SPC SPC SPC SPC SPC SPC SPC SPC SPC SPC SPC SPC SPC SPC SPC SPC SPC SPC ' M $ SPC ~ SPC \" SPC ( c u r r e n t - t i m e - s t r i n g ) SPC \" SPC ~ $ M ' \" ) RET"))
+(eshell-insert-totoro-text)
+(treemacs)
+(other-window 1)
 
 

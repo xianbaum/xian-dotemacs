@@ -61,6 +61,10 @@
 (add-to-list 'package-archives
             '("melpa" . "https://melpa.org/packages/") t)
 
+;; Install selected packages
+(when (eq (locate-library "company") nil)
+  (package-install-selected-packages))
+
 ;; Bootstrap `use-package'
 ;; http://www.lunaryorn.com/2015/01/06/my-emacs-configuration-with-use-package.html
 ;; use-package autoloads will make sure it get pulled in at the right time

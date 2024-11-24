@@ -283,7 +283,9 @@ Other buffer group by `awesome-tab-get-group-name' with project name."
 (column-number-mode 1)
 (menu-bar-mode 0)
 (tool-bar-mode 0)
-(set-frame-font "Source Code Pro-10")
+(ignore-error
+	(set-frame-font "Source Code Pro-10"))
+
 (setq ring-bell-function 'ignore)
 
 ;; all-the-icons neotree
